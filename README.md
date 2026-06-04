@@ -1,0 +1,2 @@
+# LASMDFSW01-N1
+Aruba VSX Switch 1
