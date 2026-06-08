@@ -19,16 +19,15 @@ vlan 30
 vlan 40
     name Phones
     description Phones
-vlan 50
-    description Storage
+    voice
 vlan 55
-    description MSA2062
+    name MSA2062
 vlan 60
     description MDT
 vlan 70
     description DMZ
 vlan 80
-    description Security
+    name "VLAN 80"
 spanning-tree
 spanning-tree config-name LAS-VSX
 spanning-tree config-revision 1
@@ -40,14 +39,14 @@ interface lag 10 multi-chassis
     no shutdown
     no routing
     vlan trunk native 10
-    vlan trunk allowed 10,30,40,50,55,60,70,80
+    vlan trunk allowed 10,30,40,55,60,70,80
     lacp mode active
 interface lag 20 multi-chassis
     description TO-FIREWALL
     no shutdown
     no routing
     vlan trunk native 10
-    vlan trunk allowed 10,30,40,50,55,60,70,80
+    vlan trunk allowed 10,30,40,55,60,70,80
     lacp mode active
 interface lag 256
     description VSX-ISL
@@ -84,6 +83,48 @@ interface vlan 10
     active-gateway l3-src-mac
     active-gateway ip mac 02:00:00:00:00:10
     active-gateway ip 10.100.1.254
+interface vlan 30
+    description Users-Gateway
+    ip address 10.100.3.253/24
+    active-gateway ip mac 02:00:00:00:00:30
+    active-gateway ip 10.100.3.254
+    ip helper-address 10.100.1.132
+    ip helper-address 10.100.1.131
+
+interface vlan 40
+    description Phones-Gateway
+    ip address 10.100.4.253/24
+    active-gateway ip mac 02:00:00:00:00:40
+    active-gateway ip 10.100.4.254
+    ip helper-address 10.100.1.132
+    ip helper-address 10.100.1.131
+
+interface vlan 55
+    description MSA2062-Gateway
+    ip address 10.100.201.3/24
+    ip mtu 9198
+    active-gateway ip mac 02:00:00:00:00:55
+    active-gateway ip 10.100.201.2
+
+interface vlan 60
+    description MDT-Gateway
+    ip address 10.100.6.253/24
+    active-gateway ip mac 02:00:00:00:00:60
+    active-gateway ip 10.100.6.254
+
+interface vlan 70
+    description DMZ-Gateway
+    ip address 172.16.0.248/24
+    active-gateway ip mac 02:00:00:00:00:70
+    active-gateway ip 172.16.0.249
+
+interface vlan 80
+    description VLAN-80-Gateway
+    ip address 10.100.8.2/24
+    active-gateway ip mac 02:00:00:00:00:80
+    active-gateway ip 10.100.8.1
+    ip helper-address 10.100.1.131
+    ip helper-address 10.100.1.29
 vsx
     system-mac 02:00:00:00:83:25
     inter-switch-link lag 256
